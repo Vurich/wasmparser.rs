@@ -16,7 +16,7 @@
 use std::boxed::Box;
 use std::result;
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub struct BinaryReaderError {
     pub message: &'static str,
     pub offset: usize,
@@ -24,7 +24,7 @@ pub struct BinaryReaderError {
 
 pub type Result<T> = result::Result<T, BinaryReaderError>;
 
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Hash, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum CustomSectionKind {
     Unknown,
     Name,
@@ -36,7 +36,7 @@ pub enum CustomSectionKind {
 /// Section code as defined [here].
 ///
 /// [here]: https://webassembly.github.io/spec/binary/modules.html#sections
-#[derive(Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Hash, Debug, Copy, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub enum SectionCode<'a> {
     Custom {
         name: &'a [u8],
@@ -58,7 +58,7 @@ pub enum SectionCode<'a> {
 /// Types as defined [here].
 ///
 /// [here]: https://webassembly.github.io/spec/syntax/types.html#types
-#[derive(Debug, Copy, Clone, PartialEq, Eq)]
+#[derive(Hash, Debug, Copy, Clone, PartialEq, Eq)]
 pub enum Type {
     I32,
     I64,
@@ -73,7 +73,7 @@ pub enum Type {
 /// External types as defined [here].
 ///
 /// [here]: https://webassembly.github.io/spec/syntax/types.html#external-types
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub enum ExternalKind {
     Function,
     Table,
@@ -81,38 +81,38 @@ pub enum ExternalKind {
     Global,
 }
 
-#[derive(Debug, Clone)]
+#[derive(Hash, Debug, Clone)]
 pub struct FuncType {
     pub form: Type,
     pub params: Box<[Type]>,
     pub returns: Box<[Type]>,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub struct ResizableLimits {
     pub initial: u32,
     pub maximum: Option<u32>,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub struct TableType {
     pub element_type: Type,
     pub limits: ResizableLimits,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub struct MemoryType {
     pub limits: ResizableLimits,
     pub shared: bool,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub struct GlobalType {
     pub content_type: Type,
     pub mutable: bool,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub enum ImportSectionEntryType {
     Function(u32),
     Table(TableType),
@@ -120,31 +120,31 @@ pub enum ImportSectionEntryType {
     Global(GlobalType),
 }
 
-#[derive(Debug)]
+#[derive(Hash, Debug)]
 pub struct MemoryImmediate {
     pub flags: u32,
     pub offset: u32,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub struct Naming<'a> {
     pub index: u32,
     pub name: &'a [u8],
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub enum NameType {
     Module,
     Function,
     Local,
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub enum LinkingType {
     StackPointer(u32),
 }
 
-#[derive(Debug, Copy, Clone)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub enum RelocType {
     FunctionIndexLEB,
     TableIndexSLEB,
