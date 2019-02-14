@@ -120,7 +120,7 @@ pub enum ImportSectionEntryType {
     Global(GlobalType),
 }
 
-#[derive(Hash, Debug)]
+#[derive(Hash, Debug, Copy, Clone)]
 pub struct MemoryImmediate {
     pub flags: u32,
     pub offset: u32,
@@ -167,7 +167,7 @@ pub struct BrTable<'a> {
 ///
 /// All bit patterns are allowed.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
-pub struct Ieee32(pub(crate) u32);
+pub struct Ieee32(pub u32);
 
 impl Ieee32 {
     pub fn bits(self) -> u32 {
@@ -180,7 +180,7 @@ impl Ieee32 {
 ///
 /// All bit patterns are allowed.
 #[derive(Copy, Clone, Debug, Eq, PartialEq, Hash)]
-pub struct Ieee64(pub(crate) u64);
+pub struct Ieee64(pub u64);
 
 impl Ieee64 {
     pub fn bits(self) -> u64 {
